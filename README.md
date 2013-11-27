@@ -1,4 +1,2 @@
-infix2postfix
-=============
-
-infix2postfix
+It's simple code to convert infix statments to postfix.
+language: PYTHON
