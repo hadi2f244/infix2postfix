@@ -16,10 +16,11 @@ class Stack():
         if len(self.list):
             return self.list.pop(-1)
         return None
+    
     def peek(self):
-	if len(self.list):
-       		return self.list[-1]  
-    	return None
+        if len(self.list):
+            return self.list[-1]
+        return None
  
     def push(self, value):
         return self.list.append(value)
@@ -49,6 +50,8 @@ def getprecedence(op):
 def funcOptimize(output): # converting sin12 to sin(12) and like that for log,tan,cot,cos
     index1=output.find("sin")
     index2=output.find(" ",index1)
+    if(index2==-1): #It means we have one sin or cos or ...
+        return output[:3]+"("+output[3:]+")"
     while index1 != -1 :
         output=output[:index1+3] + '(' + output[index1+3:index2] + ')' + output[index2:]
         index1=output.find("sin",index2)
@@ -86,7 +89,6 @@ def infixtopostfix(input): # input must be lowercase
     lasttoken = None
     
     for index in range(len(input)):
-        
         token = input[index]
         if token == '-' and input[index+1] != ' ':
             output = output + token
@@ -114,7 +116,7 @@ def infixtopostfix(input): # input must be lowercase
                 while tok != "(":
                     if tok == None: #stack is empty
                         print
-                        print "ERROR: Parenthesis mismatch"
+                        print("ERROR: Parenthesis mismatch")
                         return 
  
                     output = output + " " + tok
@@ -149,13 +151,12 @@ def infixtopostfix(input): # input must be lowercase
     while tok:
         if tok == "(":
             print
-            print "ERROR: Parenthesis mismatch"
+            print("ERROR: Parenthesis mismatch")
             return 
  
         tok = stack.pop()
         output = output + " " + tok
         tok = stack.peek()
- 
     output=funcOptimize(output)
     return output
 
@@ -205,7 +206,6 @@ def funcEvaluator(evaluation_List):# evaluate value of some functions like sin,c
 def evaluating(result):#evaluate a postfix statement
    evaluation_List = []
    temp = ''
-
    for i in result+' ' :
        if i != ' ':
            temp += i
@@ -229,7 +229,7 @@ def evaluating(result):#evaluate a postfix statement
 #results = infixtopostfix("1 + (-2 - 3^-1) + 4*1".strip())
 #print results
 #r=infixtopostfix("cos(1) + (-2 - sin(94)^-1) + sin(12)+tan(15)".strip())
-r=infixtopostfix("-(-(-2)+1)".strip())
-print r
-print "the result is :"
-print evaluating(r)
+r=infixtopostfix("sin(23)".strip())
+print(r)
+print ("the result is :")
+print (evaluating(r))
